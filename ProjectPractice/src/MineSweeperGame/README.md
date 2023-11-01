@@ -1,4 +1,20 @@
 <h1>MineSweeperGame</h1>
+<h2>method</h2>
+
+<h3>- initializeBoard()</h3>
+initializeBoard 메서드는 게임 보드를 초기화하는 역할을 합니다.<br>
+numRows와 numColumns 변수에 따라 지정된 크기의 게임 보드를 생성합니다.<br>
+각 타일은 JButton으로 표현되며, 그리드 형식으로 배치됩니다.<br>
+각 버튼에는 크기가 조절되고 ActionListener가 추가됩니다.<br>
+ActionListener는 사용자가 버튼을 클릭했을 때 handleButtonClick 메서드를 호출합니다.<br>
+initializeBoard 메서드를 호출하여 게임 보드를 생성하고 초기화합니다.<br>
+
+<h3>- placeMines()</h3>
+placeMines 메서드는 게임 보드에 지뢰를 배치하는 역할을 합니다.<br>
+무작위로 지뢰를 배치하기 위해 난수 생성기 (Random)를 사용합니다.<br>
+numMines 변수에 지정된 수만큼 지뢰를 배치합니다.<br>
+반복문을 사용하여 무작위로 행(row)과 열(col)을 선택하고, 해당 위치에 지뢰가 없는 경우에만 지뢰를 배치합니다.<br>
+이러한 과정을 통해 게임 보드에 지뢰가 무작위로 배치됩니다.<br>
 
 <h3>- handleButtonClick()</h3><br>
 이 메서드는 사용자가 게임 보드의 타일을 클릭할 때 호출됩니다.<br>
