@@ -26,6 +26,8 @@ public class MineSweeperGame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("지뢰찾기");
         pack();
+        
+        setLocationRelativeTo(null);
     }
 
     private void initializeBoard() {
@@ -74,6 +76,7 @@ public class MineSweeperGame extends JFrame {
             gameOver = true;
             showMines();
             JOptionPane.showMessageDialog(this, "지뢰를 밟았습니다. 게임 종료!");
+            askForRestart();
         } else {
             int adjacentMines = countAdjacentMines(row, col);
 
@@ -81,6 +84,12 @@ public class MineSweeperGame extends JFrame {
                 revealEmptyTiles(row, col);
             } else {
                 grid[row][col].setText(String.valueOf(adjacentMines));
+            }
+
+            if (checkGameWin()) {
+                gameOver = true;
+                JOptionPane.showMessageDialog(this, "축하합니다! 모든 지뢰를 찾았습니다. 게임 종료!");
+                askForRestart();
             }
         }
     }
@@ -122,7 +131,6 @@ public class MineSweeperGame extends JFrame {
         }
     }
 
-
     private void showMines() {
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numColumns; col++) {
@@ -133,7 +141,38 @@ public class MineSweeperGame extends JFrame {
         }
     }
 
-    
+    private void askForRestart() {
+        int choice = JOptionPane.showConfirmDialog(this, "게임을 다시 시작하시겠습니까?", "게임 재시작", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            restartGame();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    private void restartGame() {
+        // Reset all game variables
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numColumns; col++) {
+                grid[row][col].setText("");
+                mineLocations[row][col] = false;
+                revealed[row][col] = false;
+            }
+        }
+
+        placeMines();
+        gameOver = false;
+    }
+    private boolean checkGameWin() {
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numColumns; col++) {
+                if (!mineLocations[row][col] && !revealed[row][col]) {
+                    return false; // 아직 모든 빈 칸이 열리지 않았으면 게임 승리 조건 충족하지 않음
+                }
+            }
+        }
+        return true; // 모든 빈 칸이 열렸으면 게임 승리
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -142,4 +181,5 @@ public class MineSweeperGame extends JFrame {
         });
     }
 }
+
 
