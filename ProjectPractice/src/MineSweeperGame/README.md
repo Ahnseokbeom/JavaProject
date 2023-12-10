@@ -1,38 +1,65 @@
-<h1>MineSweeperGame</h1>
-<h2>method</h2>
+# MineSweeper Game
 
-<h3>- initializeBoard()</h3>
-initializeBoard 메서드는 게임 보드를 초기화하는 역할을 합니다.<br>
-numRows와 numColumns 변수에 따라 지정된 크기의 게임 보드를 생성합니다.<br>
-각 타일은 JButton으로 표현되며, 그리드 형식으로 배치됩니다.<br>
-각 버튼에는 크기가 조절되고 ActionListener가 추가됩니다.<br>
-ActionListener는 사용자가 버튼을 클릭했을 때 handleButtonClick 메서드를 호출합니다.<br>
-initializeBoard 메서드를 호출하여 게임 보드를 생성하고 초기화합니다.<br>
+The MineSweeper Game is a Java Swing-based application that allows users to play the classic game of MineSweeper. Below is an overview of the project's structure and components.
 
-<h3>- placeMines()</h3>
-placeMines 메서드는 게임 보드에 지뢰를 배치하는 역할을 합니다.<br>
-무작위로 지뢰를 배치하기 위해 난수 생성기 (Random)를 사용합니다.<br>
-numMines 변수에 지정된 수만큼 지뢰를 배치합니다.<br>
-반복문을 사용하여 무작위로 행(row)과 열(col)을 선택하고, 해당 위치에 지뢰가 없는 경우에만 지뢰를 배치합니다.<br>
-이러한 과정을 통해 게임 보드에 지뢰가 무작위로 배치됩니다.<br>
+## Project Components
 
-<h3>- handleButtonClick()</h3><br>
-이 메서드는 사용자가 게임 보드의 타일을 클릭할 때 호출됩니다.<br>
-클릭한 타일이 이미 공개되었거나, 게임이 종료된 경우 아무 작업을 하지 않습니다.<br>
-타일이 지뢰인 경우 게임이 패배로 종료되고, 모든 지뢰가 표시됩니다.<br>
-타일이 숫자를 표시하는 경우, 클릭한 타일 주위의 빈 타일 또는 숫자를 표시합니다.<br>
-게임에서 이기거나 지게 될 때 게임 종료 조건을 확인하고 메시지를 표시합니다.<br>
+### Classes
 
-<h3>- countAdjacentMines()</h3><br>
-이 메서드는 지정된 타일 주위의 인접한 지뢰 수를 계산합니다.<br>
-타일의 주위 8개의 타일을 확인하고, 지뢰가 있는 경우 카운트를 증가시킵니다.<br>
+#### `MineSweeperGame`
 
-<h3>- revealEmptyTiles()</h3><br>
-이 메서드는 빈 타일을 클릭했을 때 호출되며, 재귀적으로 주변의 빈 타일과 숫자를 표시합니다.<br>
-주위 8개의 타일을 확인하고, 만약 타일이 빈 타일이고 아직 공개되지 않았다면<br>
-handleButtonClick 메서드를 호출하여 해당 타일을 엽니다.<br>
-이 프로세스가 반복되어 빈 타일 주위의 빈 타일 및 숫자 타일을 공개합니다.<br>
+- The main class extending `JFrame`, responsible for creating the game window and handling user interactions.
+- Includes methods for initializing the game board, placing mines, and managing button clicks.
+- Features dynamic grid generation and mine placement based on user-selected difficulty (beginner, intermediate, advanced).
 
-<h3>- showMines()</h3><br>
-이 메서드는 게임이 종료되었을 때 모든 지뢰의 위치를 공개로 표시합니다.<br>
-게임이 패배한 경우 호출되며, 모든 지뢰 위치가 표시됩니다.
+### Game Logic
+
+#### `handleButtonClick(int row, int col)`
+
+- Handles the click event when a button on the game board is pressed.
+- Reveals tiles, checks for mines, and updates the game state accordingly.
+
+#### `placeMines()`
+
+- Randomly places mines on the game board based on the selected difficulty.
+
+#### `countAdjacentMines(int row, int col)`
+
+- Counts the number of mines adjacent to a given tile.
+
+#### `revealEmptyTiles(int row, int col)`
+
+- Reveals all adjacent empty tiles when an empty tile is clicked.
+
+#### `showMines()`
+
+- Reveals the locations of all mines on the board.
+
+### UI Components
+
+#### `initializeBoard()`
+
+- Sets up the initial game board with buttons and adds action listeners for button clicks.
+
+### Game Flow
+
+#### `restartGame()`
+
+- Resets the game state for a new round.
+
+#### `checkGameWin()`
+
+- Checks whether the game has been won by revealing all non-mine tiles.
+
+### UI Initialization
+
+#### `initializeGame()`
+
+- Displays a dialog for selecting the game difficulty (beginner, intermediate, advanced).
+- Initializes and returns a new instance of the `MineSweeperGame` based on the chosen difficulty.
+
+### Main Method
+
+#### `main(String[] args)`
+
+- Entry point for the application, invoking the creation of a new `MineSweeperGame` instance.
