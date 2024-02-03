@@ -26,6 +26,7 @@ public class Game extends JFrame {
         logArea = new JTextArea();
 
         initializeUI();
+        startGame();  // 게임 시작 메소드 호출
     }
 
     private void initializeUI() {
@@ -52,6 +53,7 @@ public class Game extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     moveElevator(elevatorIndex);
+                    checkAnswer(elevatorIndex);
                 }
             });
             elevatorPanel.add(elevatorButtons[i]);
@@ -62,6 +64,13 @@ public class Game extends JFrame {
         add(floorPanel, BorderLayout.WEST);
         add(elevatorPanel, BorderLayout.CENTER);
         add(new JScrollPane(logArea), BorderLayout.SOUTH);
+    }
+
+    private void startGame() {
+        for (int i = 0; i < 2; i++) {
+            elevatorFloors[i] = (int) (Math.random() * 7) + 1;  // 1부터 7까지 랜덤 층수 할당
+        }
+        log("Game started! Elevator 1 is on Floor " + elevatorFloors[0] + ", Elevator 2 is on Floor " + elevatorFloors[1]);
     }
 
     private void requestElevator(int floor) {
@@ -96,12 +105,32 @@ public class Game extends JFrame {
                 } else {
                     elevatorStatus[elevatorIndex] = false;
                     ((Timer) e.getSource()).stop();
+
+                    // 엘리베이터가 도착했을 때 새로운 문제 생성
+                    startGame();
                 }
                 elevatorFloors[elevatorIndex] = currentFloor[0];
                 log("Elevator " + (elevatorIndex + 1) + " is on Floor " + currentFloor[0]);
             }
         });
         timer.start();
+    }
+
+    private void checkAnswer(int elevatorIndex) {
+        // 사용자가 선택한 엘리베이터가 정답인지 확인
+        if (elevatorFloors[0] <= elevatorFloors[1]) {
+            if (elevatorIndex == 0) {
+                log("Correct! You guessed the right elevator!");
+            } else {
+                log("Incorrect! Try again.");
+            }
+        } else {
+            if (elevatorIndex == 1) {
+                log("Correct! You guessed the right elevator!");
+            } else {
+                log("Incorrect! Try again.");
+            }
+        }
     }
 
     private void log(String message) {
